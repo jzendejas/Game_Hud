@@ -10,22 +10,25 @@ class Root(Tk):
 		self.minsize(640, 400)
 
 		self.labelFrame = ttk.LabelFrame(self, text = "Open File")
-		self.labelFrame.grid(column = 0, row = 1, padx = 20, pady = 20)
+		self.labelFrame.grid(column = 0, row = 1, padx = 0, pady = 0)
 		
 		
 		#Player Display Frames
 		
 		self.display1Frame = ttk.LabelFrame(self, text = "Player 1")
-		self.display1Frame.grid(column = 0, row = 2, padx = 20, pady = 20)
+		self.display1Frame.grid(column = 0, row = 2, padx = 0, pady = 0)
 
 		self.display2Frame = ttk.LabelFrame(self, text = "Player 2")
-		self.display2Frame.grid(column = 4, row = 2, padx = 20, pady = 20)
+		self.display2Frame.grid(column = 4, row = 2, padx = 0, pady = 0)
 		
 		self.display3Frame = ttk.LabelFrame(self, text = "Player 3")
-		self.display3Frame.grid(column = 0, row = 8, padx = 20, pady = 20)
+		self.display3Frame.grid(column = 0, row = 8, padx = 0, pady = 0)
 		
 		self.display4Frame = ttk.LabelFrame(self, text = "Player 4")
-		self.display4Frame.grid(column = 4, row = 8, padx = 20, pady = 20)
+		self.display4Frame.grid(column = 4, row = 8, padx = 0, pady = 0)
+		
+		self.energyFrame = ttk.LabelFrame(self, text = "Energy Expended")
+		self.energyFrame.grid(column = 1, row = 13, padx = 0, pady = 0) 
 		
 		
 		self.vicky = ImageTk.PhotoImage(Image.open("vicky.jpg").resize((100, 100)))
@@ -43,7 +46,24 @@ class Root(Tk):
 		self.button = ttk.Button(self.labelFrame, text = "Browse A File",command = self.fileDialog)
 		self.button.grid(column = 1, row = 1)
 		
+	def Xcalculate_energy(self, mass, velocity, velocity0, time, distance):
+		Ex = ( (mass/2.2) * ( (velocity - velocity0) / time ) ) * distance * (786.8/1000)
+		return Ex
+		
+	def Ycalculate_energy(self, mass, velocity, velocity0, time, distance):
+		Ey = ( (mass/2.2) * ( (velocity - velocity0) / time ) ) * distance * (786.8/1000)
+		return Ey
+		
+
+		
+		
 	def displays(self):
+		#Energy Expended Display
+		#self.energy = ttk.Label(self.energyFrame, text= "Energy Expended")
+		energy_entry = ttk.Entry(self.energyFrame, textvariable = StringVar(), font=('calibre',10,'normal'))
+		#self.energy.grid(column=2, row=13)
+		energy_entry.grid(column=1, row=14)
+	
 		#Player Displays
 		  
 		self.display1 = ttk.Label(self.display1Frame, image=self.vicky)
@@ -106,15 +126,15 @@ class Root(Tk):
 		(("jpeg files","*.jpg"),("all files","*.*")) )
 		self.label = ttk.Label(self.labelFrame, text = "")
 		self.label.grid(column = 1, row = 2)
-		self.label.configure(text = self.filename)
+		#self.label.configure(text = self.filename)
 
 		img = Image.open(self.filename)
-		img = img.resize((200, 250))
+		img = img.resize((500, 340))
 		photo = ImageTk.PhotoImage(img)
 
 		self.label2 = Label(image=photo)
 		self.label2.image = photo 
-		self.label2.grid(column=2, row=7)
+		self.label2.grid(column=1, row=7)
 		
 root = Root()
 root.mainloop()
